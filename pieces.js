@@ -55,8 +55,10 @@ boutonTrier.addEventListener('click', function(){
         return a.prix - b.prix;
     });
     document.querySelector(".fiches").innerHTML = "";
+    const titreTrier = document.createElement("h4");
+    titreTrier.innerText = "Pièces triées par prix croissant :";
+    document.querySelector(".fiches").appendChild(titreTrier);
     genererPieces(piecesOrdonnees);
-    //console.log(piecesOrdonnees);
 });
 
 const boutonDecroissant = document.querySelector(".btn-trier-dec");
@@ -66,8 +68,10 @@ boutonDecroissant.addEventListener("click", function(){
         return b.prix - a.prix;
     });
     document.querySelector(".fiches").innerHTML = "";
+    const titreDesc = document.createElement("h4");
+    titreDesc.innerText = "Pièces triées par prix décroissant :";
+    document.querySelector(".fiches").appendChild(titreDesc);
     genererPieces(piecesDecroissantes);
-    console.log(piecesDecroissantes);
 });
 
 const boutonFiltrer = document.querySelector(".btn-filtrer");
@@ -76,6 +80,9 @@ boutonFiltrer.addEventListener("click", function(){
         return pieces.prix <= 35;
     });
     document.querySelector(".fiches").innerHTML = "";
+    const titreAbordable = document.createElement("h4");
+    titreAbordable.innerText = "Pièces abordables :";
+    document.querySelector(".fiches").appendChild(titreAbordable);
     genererPieces(piecesFiltrees);
     console.log(piecesFiltrees);
 });
@@ -86,11 +93,14 @@ boutonDescription.addEventListener("click", function(){
         return pieces.description;
     });
     document.querySelector(".fiches").innerHTML = "";
+    const titreSansDescription = document.createElement("h4");
+    titreSansDescription.innerText = "Pièces sans description précise :";
+    document.querySelector(".fiches").appendChild(titreSansDescription);
     genererPieces(piecesDescription);
     console.log(piecesDescription);
 });
 
-
+// Récupération des pièces abordables
 const noms = pieces.map(piece => piece.nom);
 for(let i = pieces.length-1; i >= 0; i--){
     if(pieces[i].prix > 35){
@@ -99,14 +109,12 @@ for(let i = pieces.length-1; i >= 0; i--){
 };
 
 // création de l'en-tête
-
 const pElement = document.createElement("p");
 pElement.innerText = "Pièces abordables :";
 
-
 // Création de la liste
 const abordablesElements = document.createElement("ul");
-// Ajout de chaque nom à la liste
+// Ajout de chaques noms à la liste
 for(let i = 0; i < noms.length; i++){
     const nomElement = document.createElement("li");
     nomElement.innerText = noms[i];
@@ -116,8 +124,7 @@ for(let i = 0; i < noms.length; i++){
 // Ajout de l'en-tête puis de la liste au bloc resultat filtre
 document.querySelector(".abordables").appendChild(pElement).appendChild(abordablesElements);
 
-// Creéation de la liste des éléments disponible
-
+// Création de la liste des éléments disponible
 const nomDisponible = pieces.map(piece => piece.nom);
 const prixDisponible = pieces.map(piece => piece.prix);
 
@@ -141,6 +148,8 @@ pElementDisponible.innerText = "Pièces disponibles :";
 
 document.querySelector(".disponible").appendChild(pElementDisponible).appendChild(disponibleElement);
 
+
+// Fonction de filtre de la balise Input range 
 const prixMaxInput = document.querySelector('#prix-max');
 prixMaxInput.addEventListener('input', function(){
 
