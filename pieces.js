@@ -98,8 +98,6 @@ for(let i = pieces.length-1; i >= 0; i--){
     };
 };
 
-console.log(noms);
-
 // création de l'en-tête
 
 const pElement = document.createElement("p");
@@ -145,15 +143,12 @@ document.querySelector(".disponible").appendChild(pElementDisponible).appendChil
 
 const prixMaxInput = document.querySelector('#prix-max');
 prixMaxInput.addEventListener('input', function(){
-    const prixDemande = document.createElement("p");
-    prixDemande.innerText = `${prixMaxInput.value} €`;
-    document.querySelector(".filtres").appendChild(prixDemande);
-    console.log(prixMaxInput.value);
 
-    //afficher les pièces avec le prix inférieur à la valeur de l'input
-    for (let i = 0; i < pieces.length; i++){
-        if(pieces[i].prix <= prixMaxInput.value){
-            console.log(pieces[i]);
-        }
-    }
+    const rangeResult = document.querySelector(".range-result");
+    rangeResult.innerText = `${prixMaxInput.value} €`;
+    const piecesFiltreesMax = pieces.filter(function(pieces){
+        return pieces.prix <= prixMaxInput.value;
+    });
+    document.querySelector(".fiches").innerHTML = "";
+    genererPieces(piecesFiltreesMax);
 });
