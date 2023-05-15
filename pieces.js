@@ -1,14 +1,19 @@
 import { ajoutListenersAvis } from "./avis.js";
 
 // Récupération des pièces depuis le fichier JSON
-const pieces = await fetch("pieces-autos.json").then(pieces => pieces.json());
-//const pieces = await reponse.json();
+const fetchPieces = async () => {
+    const reponse = await fetch("pieces-autos.json");
+    const pieces = await reponse.json();
 
+    return pieces;
+}
+
+const pieces = await fetchPieces();
 
 // Création d'une boucle pour la création de balise et l'attachement au DOM
 
-const genererPieces = (pieces) => {
-    
+const genererPieces = async (pieces) => {
+  
     for (let i = 0; i < pieces.length; i++) {
 
         const article = pieces[i];
