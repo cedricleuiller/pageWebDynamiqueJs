@@ -1,3 +1,5 @@
+import { ajoutListenersAvis } from "./avis.js";
+
 // Récupération des pièces depuis le fichier JSON
 const pieces = await fetch("pieces-autos.json").then(pieces => pieces.json());
 //const pieces = await reponse.json();
@@ -8,6 +10,8 @@ const pieces = await fetch("pieces-autos.json").then(pieces => pieces.json());
 const genererPieces = (pieces) => {
     
     for (let i = 0; i < pieces.length; i++) {
+
+        const article = pieces[i];
         // Récuperation de l'élément DOM qui accueillera les fiches
         const sectionFiches = document.querySelector(".fiches");
         // Création d'une balise dédié à une pièce automobile
@@ -32,6 +36,10 @@ const genererPieces = (pieces) => {
         const stockElement = document.createElement("p");
         stockElement.innerText = pieces[i].disponibilite ? "En stock" : "Rupture de stock";
     
+        //ajout des boutons Avis
+        const avisBouton = document.createElement("button");
+        avisBouton.dataset.id = article.id;
+        avisBouton.textContent = "afficher les avis";
     
         // On attache une balise article à la section fiches
         sectionFiches.appendChild(pieceElement);
@@ -42,7 +50,9 @@ const genererPieces = (pieces) => {
         pieceElement.appendChild(categorieElement);
         pieceElement.appendChild(descriptionElement);
         pieceElement.appendChild(stockElement);
+        pieceElement.appendChild(avisBouton);
     };
+    ajoutListenersAvis();
 };
 
 genererPieces(pieces);
