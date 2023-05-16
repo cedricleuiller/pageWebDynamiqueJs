@@ -27,6 +27,18 @@
 					<input type="range" min="0" max="60" id="prix-max" name="prix-max" step="5">
 					<label for="prix-max"><span class="range-result"></span></label>
 				</div>
+				<h3>ajouter un avis</h3>
+				<form action="post" class="formulaire-avis">
+					identifiant de la pièce :<br>
+					<input type="number" name="piece-id" min="1"><br>
+					nom d'utilisateur :<br>
+					<input type="text" name="utilisateur"><br>
+					avis :<br>
+					<input type="text" name="commentaire"><br>
+					Nombres d'étoiles : <br>
+					<input type="number" name="nbEtoiles" min="0" max="5"><br>
+					<button>Envoyer</button>
+				</form>
 			</section>
 
 			<!-- Fiches produits -->
