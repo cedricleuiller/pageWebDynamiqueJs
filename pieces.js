@@ -1,14 +1,44 @@
 import { ajoutListenersAvis, ajoutListenerEnvoyerAvis } from "./avis.js";
 
+// Récupération des valeurs dans le localStorage
+    // Le nom de l'entreprise
+const nomEntreprise = window.localStorage.getItem("nom");
+    // Récupération des pièces éventuelles stockées dans le localStorage
+let piecesStorage = window.localStorage.getItem("pieces");
+if (piecesStorage === null){
+    const fetchPieces = async () => {
+        const reponse = await fetch("http://localhost:8081/pieces");
+        const pieces = await reponse.json();
+    
+        return pieces;
+    }
+    const pieces = await fetchPieces();
+    const valeurPieces = JSON.stringify(pieces);
+    window.localStorage.setItem("pieces", valeurPieces);
+} else {
+    piecesStorage = JSON.parse(piecesStorage);
+}
+
+// Récupération des avis éventuels stockées dans le localStorage
+let avisStorage = window.localStorage.getItem(`avis`);
+console.log(avisStorage);
+
 // Récupération des pièces depuis le fichier JSON
 const fetchPieces = async () => {
     const reponse = await fetch("http://localhost:8081/pieces");
     const pieces = await reponse.json();
 
     return pieces;
-}
+};
 
 const pieces = await fetchPieces();
+
+// Transformation des pièces en JSON
+const valeurPieces = JSON.stringify(pieces);
+
+//stockage des informations dans le localStorage
+window.localStorage.setItem("nom", "Les Bonnes Pièces");
+window.localStorage.setItem("pieces", valeurPieces);
 
 // Appel de la fonction pour ajouter le listener au formulaire
 ajoutListenerEnvoyerAvis();
@@ -158,7 +188,7 @@ for (let i = 0; i < nomDisponible.length; i++){
     const nomElement = document.createElement("li");
     nomElement.innerText = `${nomDisponible[i]} - ${prixDisponible[i]} €`;
     disponibleElement.appendChild(nomElement);
-}
+};
 
 const pElementDisponible = document.createElement("p");
 pElementDisponible.innerText = "Pièces disponibles :";
@@ -177,4 +207,10 @@ prixMaxInput.addEventListener('input', function(){
     });
     document.querySelector(".fiches").innerHTML = "";
     genererPieces(piecesFiltreesMax);
+});
+
+// Ajout du listener pour mettre à jour des données du localStorage
+const buttonMaj = document.querySelector(".btn-maj");
+buttonMaj.addEventListener("click", function(){
+    window.localStorage.removeItem("pieces");
 });
